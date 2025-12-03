@@ -32,27 +32,33 @@
 <script>
   // Verificăm dacă tab-ul a fost deja accesat
   if (localStorage.getItem('stimulus_used')) {
-    const container = document.getElementById('container');
-    container.innerHTML = '<div class="message">Ai folosit deja acest link. Nu mai poate fi accesat.</div>';
+    document.getElementById('container').innerHTML =
+      '<div class="message">Ai folosit deja acest link. Nu mai poate fi accesat.</div>';
   } else {
-    // Marcam că a fost folosit
     localStorage.setItem('stimulus_used', 'true');
 
-    // Creează imaginea și afișează-o
     const container = document.getElementById('container');
     const img = document.createElement('img');
-    img.src = "1a.jpg";  // <- Înlocuiește cu URL-ul imaginii tale
+    img.src = "1a.jpg;  // <- Înlocuiește cu URL-ul imaginii tale
     img.alt = "Stimulus";
     container.appendChild(img);
 
-    // Setăm timer de 10 secunde pentru închiderea tab-ului
+    // Detectăm dacă e mobil
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     setTimeout(() => {
-      window.close();
-    }, 10000);
+      if (!isMobile) {
+        // Desktop: închide tab-ul
+        window.close();
+      } else {
+        // Mobil: ascunde imaginea și afișează mesaj
+        img.style.display = 'none';
+        container.innerHTML =
+          '<div class="message">Timpul pentru imagine s-a terminat. Întoarce-te la Formular.</div>';
+      }
+    }, 5000); // 5 secunde
   }
 </script>
 
 </body>
 </html>
-
-
