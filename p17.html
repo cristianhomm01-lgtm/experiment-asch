@@ -30,35 +30,40 @@
 <div id="container"></div>
 
 <script>
-  // Verificăm dacă tab-ul a fost deja accesat
-  if (localStorage.getItem('stimulus_used')) {
+  // Detectăm numele fișierului actual (ex: p1.html)
+  const fileName = window.location.pathname.split("/").pop().split(".")[0];
+
+  // Construim cheia unică pentru acest fișier
+  const storageKey = "stimulus_used_" + fileName;
+
+  // Verificăm dacă linkul a fost deja folosit
+  if (localStorage.getItem(storageKey)) {
     document.getElementById('container').innerHTML =
       '<div class="message">Ai folosit deja acest link. Nu mai poate fi accesat.</div>';
   } else {
-    localStorage.setItem('stimulus_used', 'true');
+    localStorage.setItem(storageKey, 'true');
 
     const container = document.getElementById('container');
     const img = document.createElement('img');
-    img.src = "1a.jpg";  // <- Înlocuiește cu URL-ul imaginii tale
+    img.src = "17a.jpg";  
     img.alt = "Stimulus";
     container.appendChild(img);
 
-    // Detectăm dacă e mobil
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     setTimeout(() => {
       if (!isMobile) {
-        // Desktop: închide tab-ul
         window.close();
       } else {
-        // Mobil: ascunde imaginea și afișează mesaj
         img.style.display = 'none';
         container.innerHTML =
-          '<div class="message">Timpul pentru imagine s-a terminat. Întoarce-te la Formular.</div>';
+          '<div class="message">Timpul s-a terminat. Întoarce-te la Formular.</div>';
       }
-    }, 10000); // 10 secunde
+    }, 10000);
   }
 </script>
 
+
 </body>
 </html>
+
