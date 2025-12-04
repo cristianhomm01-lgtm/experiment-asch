@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Stimulus</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .message {
+      font-size: 1.5rem;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container"></div>
+
+<script>
+  // Verificăm dacă tab-ul a fost deja accesat
+  if (localStorage.getItem('stimulus_used')) {
+    document.getElementById('container').innerHTML =
+      '<div class="message">Ai folosit deja acest link. Nu mai poate fi accesat.</div>';
+  } else {
+    localStorage.setItem('stimulus_used', 'true');
+
+    const container = document.getElementById('container');
+    const img = document.createElement('img');
+    img.src = "1a.jpg";  // <- Înlocuiește cu URL-ul imaginii tale
+    img.alt = "Stimulus";
+    container.appendChild(img);
+
+    // Detectăm dacă e mobil
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    setTimeout(() => {
+      if (!isMobile) {
+        // Desktop: închide tab-ul
+        window.close();
+      } else {
+        // Mobil: ascunde imaginea și afișează mesaj
+        img.style.display = 'none';
+        container.innerHTML =
+          '<div class="message">Timpul pentru imagine s-a terminat. Întoarce-te la Formular.</div>';
+      }
+    }, 10000); // 10 secunde
+  }
+</script>
+
+</body>
+</html>
